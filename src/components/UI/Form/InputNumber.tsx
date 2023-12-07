@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, ReactNode} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper';
 import styled from 'styled-components/native';
@@ -22,6 +22,7 @@ interface IProps {
   viewStyle?: StyleProp<ViewStyle>;
   errorMassage?: string;
   onChange: (value: string) => void;
+  questionMassage?: ReactNode;
 }
 
 const InputNumber: FC<IProps> = ({
@@ -35,12 +36,16 @@ const InputNumber: FC<IProps> = ({
   value,
   validNumber = false,
   type,
+  questionMassage = <></>,
 }) => {
   // const [text, setText] = React.useState(defaultValue);
 
   return (
     <View style={[viewStyle, {marginBottom: 20}]}>
-      <LabelText>{label}</LabelText>
+      <LabelHeader>
+        <LabelText>{label}</LabelText>
+        {questionMassage}
+      </LabelHeader>
       {errorMassage ? (
         <ErrorMassage>{errorMassage}</ErrorMassage>
       ) : (
@@ -82,14 +87,19 @@ const InputNumber: FC<IProps> = ({
 
 export default InputNumber;
 
+const LabelHeader = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+`;
+
 const LabelText = styled.Text`
   overflow: hidden;
   color: #000;
   font-size: 14px;
   font-weight: 500;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
 `;
 
 const StatusView = styled.View`

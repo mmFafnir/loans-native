@@ -1,11 +1,7 @@
 import {FC, useEffect, useState} from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
-import {Button, Card, Checkbox, IconButton, Surface} from 'react-native-paper';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
+import {StyleSheet, Linking} from 'react-native';
+import {Card} from 'react-native-paper';
+import Animated, {useAnimatedStyle, withSpring} from 'react-native-reanimated';
 import {Path, Svg} from 'react-native-svg';
 import styled from 'styled-components/native';
 
@@ -51,7 +47,12 @@ const InputCheckbox: FC<IProps> = ({
           </CheckboxIcon>
         </Animated.View>
       </Card>
-      <LabelText>{label}</LabelText>
+      <LabelText
+        onPress={() =>
+          Linking.openURL('https://usacashlink.com/privacy-policy')
+        }>
+        {label}
+      </LabelText>
     </CheckboxView>
   );
 };
@@ -75,6 +76,7 @@ const LabelText = styled.Text`
   color: #000;
   font-size: 14px;
   margin-left: 13px;
+  text-decoration: underline;
 `;
 
 export default InputCheckbox;

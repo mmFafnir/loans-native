@@ -26,11 +26,18 @@ import {FormValues} from '../../store/Slices/formSlice/interface';
 import {useTypeDispatch} from '../../hooks/useTypeDispatch';
 import {postForm} from '../../store/Slices/formSlice/asyncActions';
 import {EnumStatus} from '../../types/Enums';
+import {useNavigation} from '@react-navigation/native';
+import {FormScreenProp} from '../../screens/FormScreen';
+import {setStatusDefault} from '../../store/Slices/formSlice';
+import QuestionMassage from '../../components/UI/Form/QuestionMassage';
 
 const GetForm = () => {
   const {range} = useTypeSelector(state => state.range);
   const {status} = useTypeSelector(state => state.form);
   const dispatch = useTypeDispatch();
+
+  const navigation = useNavigation<FormScreenProp>();
+
   const [incomeTypeJob, setIncomeTypeJob] = useState<boolean>(false);
   const [isAgree, setIsAgree] = useState<boolean>(false);
   const {
@@ -45,8 +52,13 @@ const GetForm = () => {
 
   const onSubmit = (data: FormValues) => {
     if (status === EnumStatus.LOADING) return;
-    // console.log(data);
-    dispatch(postForm(data));
+    dispatch(postForm(data))
+      .then(res => {
+        navigation.navigate('StatusPage');
+      })
+      .finally(() => {
+        dispatch(setStatusDefault());
+      });
   };
 
   return (
@@ -217,6 +229,12 @@ const GetForm = () => {
                 mask: '999999999',
               }}
               errorMassage={errors.ssn?.message as string}
+              questionMassage={
+                <QuestionMassage
+                  title="This will NOT affect your credit score."
+                  text="Social Security is used by lenders to qualify you for your loan request."
+                />
+              }
             />
           )}
         />
@@ -258,6 +276,13 @@ const GetForm = () => {
                 mask: '9999999999999999999999999',
               }}
               errorMassage={errors.driversLicenseNumber?.message as string}
+              questionMassage={
+                <QuestionMassage
+                  title="Drivers License Number"
+                  text="This is used to verify your identity and reduce the chance of fraud.
+"
+                />
+              }
             />
           )}
         />
@@ -431,6 +456,12 @@ const GetForm = () => {
               type="only-numbers"
               placeholder="e.g. 2341536435"
               errorMassage={errors.bankAba?.message as string}
+              questionMassage={
+                <QuestionMassage
+                  title="ABA routing number"
+                  img={require('../../assets/images/tips/aba.png')}
+                />
+              }
             />
           )}
         />
@@ -450,6 +481,12 @@ const GetForm = () => {
               type="only-numbers"
               placeholder="e.g. 2341536435"
               errorMassage={errors.bankAccountNumber?.message as string}
+              questionMassage={
+                <QuestionMassage
+                  title="Account number"
+                  img={require('../../assets/images/tips/ano.png')}
+                />
+              }
             />
           )}
         />

@@ -26,7 +26,7 @@ export default SliderRange;
 
 const SliderRangeView = styled.View`
   position: relative;
-  padding: 20px;
+  padding: 20px 40px;
   text-align: center;
 `;
 

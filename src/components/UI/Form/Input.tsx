@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactNode, useState} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper';
 import styled from 'styled-components/native';
@@ -14,6 +14,7 @@ interface IProps {
   viewStyle?: StyleProp<ViewStyle>;
   errorMassage?: string;
   onChange: (value: string) => void;
+  questionMassage?: ReactNode;
 }
 
 const Input: FC<IProps> = ({
@@ -24,12 +25,16 @@ const Input: FC<IProps> = ({
   viewStyle = {},
   onChange,
   value,
+  questionMassage = <></>,
 }) => {
   // const [text, setText] = React.useState(defaultValue);
 
   return (
     <View style={[viewStyle, {marginBottom: 20}]}>
-      <LabelText>{label}</LabelText>
+      <LabelHeader>
+        <LabelText>{label}</LabelText>
+        {questionMassage}
+      </LabelHeader>
       {errorMassage && <ErrorMassage>{errorMassage}</ErrorMassage>}
       <Card
         mode="elevated"
@@ -57,14 +62,19 @@ const Input: FC<IProps> = ({
 
 export default Input;
 
+const LabelHeader = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+`;
+
 const LabelText = styled.Text`
   overflow: hidden;
   color: #000;
   font-size: 14px;
   font-weight: 500;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
 `;
 
 const InputText = styled.TextInput`
@@ -89,7 +99,3 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
 });
-
-interface IPropsSvgStatus {
-  status: boolean;
-}

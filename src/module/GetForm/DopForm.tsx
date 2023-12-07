@@ -6,6 +6,7 @@ import Input from '../../components/UI/Form/Input';
 import InputNumber from '../../components/UI/Form/InputNumber';
 import {validPhoneNumber} from '../../assets/scripts/validNumbers';
 import {FormValues} from '../../store/Slices/formSlice/interface';
+import QuestionMassage from '../../components/UI/Form/QuestionMassage';
 
 interface IPropsJob {
   control: Control<FormValues, any>;
@@ -57,6 +58,12 @@ const DopFormJob: FC<IPropsJob> = ({control, errors}) => {
               mask: '(999) 999-9999',
             }}
             errorMassage={errors.workPhone?.message as string}
+            questionMassage={
+              <QuestionMassage
+                title="Employer's Phone Number"
+                text="In the event a lender cannot reach you, you may be contacted at this number regarding your loan inquiry, but the lender will not disclose to your employer the reason for the call."
+              />
+            }
           />
         )}
       />

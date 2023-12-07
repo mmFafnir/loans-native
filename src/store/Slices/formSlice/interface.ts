@@ -23,3 +23,5 @@ export type FormValues = {
   bankAccountNumber: string;
   dob: string;
 };
+
+export type TypeResponseStatusForm = 'success' | 'have' | 'reject';

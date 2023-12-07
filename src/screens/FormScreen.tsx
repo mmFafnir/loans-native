@@ -4,7 +4,7 @@ import GetForm from '../module/GetForm/GetForm';
 import {Provider} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
-export type MainScreenProp = NativeStackNavigationProp<
+export type FormScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   'FormPage'
 >;

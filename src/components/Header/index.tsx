@@ -1,13 +1,13 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {G, Path, Svg} from 'react-native-svg';
 import styled from 'styled-components/native';
 import Logo from '../UI/Logo';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {ParamListBase} from '@react-navigation/native';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {IconButton} from 'react-native-paper';
-import TabsHeader from '../TabsHeader';
+import {Card, IconButton} from 'react-native-paper';
+import {MainScreenProp} from '../../screens/MainScreen';
 
 interface IProps {
   navigation?:
@@ -16,9 +16,20 @@ interface IProps {
 }
 
 const Header: FC<IProps> = ({navigation}) => {
+  const customNavigate = useNavigation<MainScreenProp>();
   const goBack = () => navigation?.goBack();
+  const goMain = () => customNavigate.navigate('MainPage');
+
   return (
-    <>
+    <Card
+      style={styles.card}
+      mode={
+        customNavigate.getState().routeNames[
+          customNavigate.getState().index
+        ] === 'FormPage'
+          ? 'elevated'
+          : 'contained'
+      }>
       <HeaderWrapper>
         {navigation && (
           <View style={styles.wrapper}>
@@ -34,10 +45,12 @@ const Header: FC<IProps> = ({navigation}) => {
           </View>
         )}
         <LogoView>
-          <Logo />
+          <Pressable onPress={goMain}>
+            <Logo />
+          </Pressable>
         </LogoView>
       </HeaderWrapper>
-    </>
+    </Card>
   );
 };
 
@@ -61,5 +74,9 @@ const LogoView = styled.View`
 const styles = StyleSheet.create({
   wrapper: {
     marginRight: 'auto',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 0,
   },
 });

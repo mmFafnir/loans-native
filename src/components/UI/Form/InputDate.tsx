@@ -1,11 +1,9 @@
-import React, {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {Card, Modal, Portal} from 'react-native-paper';
 import styled from 'styled-components/native';
-import {EnumStatusInput} from '../../../types/Enums';
 import DateTimePicker, {DateType} from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
-import {SvgStatus} from '../SVG/Menu/SvgStatus';
 import {isWeekend} from '../../../assets/scripts/date';
 import ErrorMassage from './ErrorMassage';
 
@@ -42,7 +40,7 @@ const InputDate: FC<IProps> = ({
     }
     onChange(dayjs(currentValue).format('YYYY-MM-DD'));
   };
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -102,11 +100,6 @@ const InputText = styled.Text`
   font-size: 14px;
   flex: 1;
   color: #000;
-`;
-
-const StatusView = styled.View`
-  width: 20px;
-  height: 20px;
 `;
 
 const ModalView = styled.View`
