@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Animated, Pressable, StyleSheet, View} from 'react-native';
-import {Button, Card} from 'react-native-paper';
+import {Animated, StyleSheet} from 'react-native';
 import {Path, Svg} from 'react-native-svg';
 import styled from 'styled-components/native';
 import TabButton from './TabButton';
 import {useTypeSelector} from '../../hooks/useTypeSelector';
+import {useNavigation} from '@react-navigation/native';
+import {MainScreenProp} from '../../screens/MainScreen';
+import {useTypeDispatch} from '../../hooks/useTypeDispatch';
+import {setTab} from '../../store/Slices/tabSlice';
 
 const TabsHeader = () => {
+  const navigation = useNavigation<MainScreenProp>();
+  const dispatch = useTypeDispatch();
   const {tab} = useTypeSelector(state => state.tab);
   const [colorFist, setColorFirst] = useState(new Animated.Value(1));
   const [colorSecond, setColorSecond] = useState(new Animated.Value(0));
@@ -33,6 +38,12 @@ const TabsHeader = () => {
       useNativeDriver: false,
     }).start();
   }, [tab]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setTab(0));
+    };
+  }, [navigation]);
 
   const PathAnimated = Animated.createAnimatedComponent(Path);
   return (
@@ -80,7 +91,7 @@ const TabsView = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 0px 15px;
-  background-color: transparent;
+  background-color: #fff;
 `;
 
 const styles = StyleSheet.create({
@@ -89,5 +100,6 @@ const styles = StyleSheet.create({
   },
   svg: {
     marginLeft: 10,
+    marginBottom: 3,
   },
 });

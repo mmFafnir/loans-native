@@ -48,6 +48,7 @@ const Input: FC<IProps> = ({
           defaultValue={defaultValue}
           value={value}
           placeholder={placeholder}
+          placeholderTextColor={'#00000044'}
           onChangeText={onChange}
         />
         {errorMassage && (
@@ -81,6 +82,7 @@ const InputText = styled.TextInput`
   height: 100%;
   font-size: 14px;
   flex: 1;
+  color: #000;
 `;
 
 const StatusView = styled.View`

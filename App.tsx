@@ -18,10 +18,8 @@ import {store} from './src/store';
 import {Provider} from 'react-redux';
 import TabsHeader from './src/components/TabsHeader';
 import StatusScreen from './src/screens/StatusScreen';
-import LoadingScreen from './src/screens/LoadingScreen';
 
 export type RootStackParamList = {
-  LoadingPage: undefined;
   FirstPage: undefined;
   MainPage: undefined;
   FormPage: undefined;
@@ -34,14 +32,7 @@ const App = (): JSX.Element => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LoadingPage">
-          <Stack.Screen
-            name={'LoadingPage'}
-            component={LoadingScreen}
-            options={{
-              header: () => <></>,
-            }}
-          />
+        <Stack.Navigator initialRouteName="FirstPage">
           <Stack.Screen
             name={'FirstPage'}
             component={MainScreen}
@@ -96,7 +87,7 @@ export const StylePageViewDark = styled.View`
 `;
 export const StylePageViewLight = styled.View`
   background-color: #fff;
-  color: #fff;
+  color: #000;
   flex: 1;
   flex-direction: 'column';
   align-items: 'center';

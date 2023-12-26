@@ -1,20 +1,11 @@
 import React, {FC, ReactNode, useEffect} from 'react';
-import {View} from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 
 interface IProps {
   children: ReactNode;
   focus: boolean;
 }
 
-const timingConfig = {
-  duration: 1000,
-};
 const MenuIcon: FC<IProps> = ({children, focus}) => {
   const scale = useSharedValue(1);
   const translateY = useSharedValue(0);
@@ -31,7 +22,6 @@ const MenuIcon: FC<IProps> = ({children, focus}) => {
   };
 
   useEffect(() => {
-    console.log(focus);
     if (focus) {
       setActiveIcon();
     } else {

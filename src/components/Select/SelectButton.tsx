@@ -11,9 +11,10 @@ import styled from 'styled-components/native';
 interface IProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  text: string;
 }
 
-const SelectButton: FC<IProps> = ({open, setOpen}) => {
+const SelectButton: FC<IProps> = ({open, setOpen, text}) => {
   const scale = useSharedValue(1);
 
   const animatedStyles = useAnimatedStyle(() => ({
@@ -33,8 +34,8 @@ const SelectButton: FC<IProps> = ({open, setOpen}) => {
           styles.shadowButton,
           {width: Dimensions.get('window').width - 32},
         ]}>
-        <ButtonText>What is a payday loan?</ButtonText>
-        <Animated.View style={animatedStyles}>
+        <ButtonText>{text}</ButtonText>
+        <Animated.View style={[animatedStyles, styles.icon]}>
           <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <Path
               d="M6 9L12 15L18 9"
@@ -68,6 +69,7 @@ const ButtonView = styled.View`
 const ButtonText = styled.Text`
   font-size: 14px;
   color: #fff;
+  flex: 0 1 350px;
 `;
 
 const styles = StyleSheet.create({
@@ -80,5 +82,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     elevation: 12,
+  },
+
+  icon: {
+    flexShrink: 0,
+    flexBasis: 20,
   },
 });

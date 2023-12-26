@@ -72,6 +72,7 @@ const InputNumber: FC<IProps> = ({
           options={options ? options : undefined}
           value={String(value)}
           placeholder={placeholder}
+          placeholderTextColor={'#00000044'}
           onChangeText={onChange}
           defaultValue={defaultValue}
         />
@@ -121,5 +122,6 @@ const styles = StyleSheet.create({
     height: '100%',
     fontSize: 14,
     flex: 1,
+    color: '#000',
   },
 });

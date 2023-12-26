@@ -12,9 +12,10 @@ import Animated, {
 
 interface IProps {
   open: boolean;
+  text: string;
 }
 
-const SelectBody: FC<IProps> = ({open}) => {
+const SelectBody: FC<IProps> = ({open, text}) => {
   const bodyRef = useAnimatedRef<Animated.View>();
   const height = useSharedValue(0);
 
@@ -38,14 +39,7 @@ const SelectBody: FC<IProps> = ({open}) => {
       <Animated.View style={[animatedHeight, styles.body]}>
         <Animated.View ref={bodyRef} style={styles.absolute}>
           <BodyWrapper style={styles.shadow}>
-            <BodyText>
-              A payday loan is a short-term, high-interest loan typically due on
-              the borrower's next payday, often for small amounts. It involves a
-              post-dated check or electronic withdrawal and is known for its
-              high fees and easy accessibility. However, these loans have faced
-              criticism for their high costs and potential to trap borrowers in
-              a cycle of debt.
-            </BodyText>
+            <BodyText>{text}</BodyText>
           </BodyWrapper>
         </Animated.View>
       </Animated.View>
@@ -63,6 +57,7 @@ const Body = styled.View`
 const BodyWrapper = styled.View`
   padding: 20px;
   margin: 0px 16px;
+  margin-bottom: 10px;
   border-radius: 8px;
   background-color: #fff;
   height: max-content;
@@ -71,6 +66,7 @@ const BodyWrapper = styled.View`
 const BodyText = styled.Text`
   font-size: 14px;
   color: #000;
+  line-height: 19px;
 `;
 
 const styles = StyleSheet.create({

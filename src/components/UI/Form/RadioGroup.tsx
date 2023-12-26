@@ -40,6 +40,7 @@ const RadioGroup: FC<IProps> = ({
             <RadioButton.Item
               color="#73a7fc"
               style={styles.padding}
+              labelStyle={{color: '#000'}}
               key={item.value}
               label={item.label}
               value={item.value}

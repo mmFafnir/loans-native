@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import Input from '../../components/UI/Form/Input';
 import styled from 'styled-components/native';
@@ -18,7 +18,6 @@ import InputNumber from '../../components/UI/Form/InputNumber';
 import RadioGroup from '../../components/UI/Form/RadioGroup';
 import DopFormJob from './DopForm';
 import {getOnlyNum} from '../../assets/scripts/getOnlyNum';
-import dayjs from 'dayjs';
 import {getDate, isWeekend} from '../../assets/scripts/date';
 import {validPhoneNumber} from '../../assets/scripts/validNumbers';
 import {useTypeSelector} from '../../hooks/useTypeSelector';
@@ -28,22 +27,22 @@ import {postForm} from '../../store/Slices/formSlice/asyncActions';
 import {EnumStatus} from '../../types/Enums';
 import {useNavigation} from '@react-navigation/native';
 import {FormScreenProp} from '../../screens/FormScreen';
-import {setStatusDefault} from '../../store/Slices/formSlice';
 import QuestionMassage from '../../components/UI/Form/QuestionMassage';
 
 const GetForm = () => {
-  const {range} = useTypeSelector(state => state.range);
-  const {status} = useTypeSelector(state => state.form);
+  const {range, email} = useTypeSelector(state => state.range);
+  const {status, responseStatus} = useTypeSelector(state => state.form);
   const dispatch = useTypeDispatch();
 
   const navigation = useNavigation<FormScreenProp>();
 
   const [incomeTypeJob, setIncomeTypeJob] = useState<boolean>(false);
   const [isAgree, setIsAgree] = useState<boolean>(false);
+
   const {
     handleSubmit,
     control,
-
+    reset,
     formState: {errors, isValid},
   } = useForm<FormValues>({
     mode: 'all',
@@ -52,14 +51,16 @@ const GetForm = () => {
 
   const onSubmit = (data: FormValues) => {
     if (status === EnumStatus.LOADING) return;
-    dispatch(postForm(data))
-      .then(res => {
-        navigation.navigate('StatusPage');
-      })
-      .finally(() => {
-        dispatch(setStatusDefault());
-      });
+    dispatch(postForm(data)).then(res => {
+      navigation.navigate('StatusPage');
+    });
   };
+
+  useEffect(() => {
+    if (responseStatus === 'reject') {
+      reset();
+    }
+  }, [navigation]);
 
   return (
     <FormView>
@@ -82,6 +83,7 @@ const GetForm = () => {
           name="email"
           control={control}
           rules={{required: validRequired, pattern: validEmail}}
+          defaultValue={email}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
               onChange={onChange}
@@ -89,6 +91,7 @@ const GetForm = () => {
               label="My email address is..."
               placeholder={'example@mail.ru'}
               errorMassage={errors.email?.message as string}
+              defaultValue={email}
             />
           )}
         />
@@ -133,7 +136,6 @@ const GetForm = () => {
         <Controller
           name="homePhone"
           control={control}
-          // дописать регулярное выражение
           rules={{
             required: validRequired,
             minLength: {
@@ -163,6 +165,11 @@ const GetForm = () => {
           rules={{
             required: validRequired,
             minLength: validMin(5),
+            pattern: {
+              value: /^(?!72|716|10|14|005|03|05|24|25)\d{5}$/,
+              message:
+                'Unfortunately we do not currently offer any services in Arkansas, New York, New Hampshire, Vermont and West Virginia',
+            },
           }}
           render={({field: {onChange, value}}) => (
             <InputNumber
@@ -416,9 +423,13 @@ const GetForm = () => {
             />
           )}
         />
+
         <Controller
           name="creditRating"
           control={control}
+          rules={{
+            required: validRequired,
+          }}
           render={({field: {onChange, value}}) => (
             <RadioGroup
               label="Is your pay a Direct Deposit?"
@@ -433,6 +444,26 @@ const GetForm = () => {
             />
           )}
         />
+
+        <Controller
+          name="unsecuredDebt"
+          control={control}
+          rules={{
+            required: validRequired,
+          }}
+          render={({field: {onChange, value}}) => (
+            <RadioGroup
+              label="Select 'Yes' if you have $10,000+ in unsecured debt and would like one of our partners to contact you?"
+              value={value}
+              onChange={onChange}
+              items={[
+                {label: 'Yes', value: 'YES'},
+                {label: 'No', value: 'NO'},
+              ]}
+            />
+          )}
+        />
+
         <Controller
           name="bankName"
           control={control}
@@ -503,7 +534,7 @@ const GetForm = () => {
             onPress={handleSubmit(onSubmit as any)}
             style={[styles.button, !isAgree || !isValid ? styles.disable : {}]}
             mode="elevated"
-            disabled={!isAgree || !isValid}
+            disabled={!isAgree || !isValid || status === EnumStatus.LOADING}
             elevation={4}>
             <TextButton>Get a loan</TextButton>
           </Button>

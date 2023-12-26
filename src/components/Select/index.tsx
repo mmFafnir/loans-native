@@ -3,13 +3,18 @@ import {View} from 'react-native';
 import SelectButton from './SelectButton';
 import SelectBody from './SelectBody';
 
-const Select: FC = () => {
+interface IProps {
+  title: string;
+  text: string;
+}
+
+const Select: FC<IProps> = ({title, text}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <View style={{overflow: 'visible'}}>
-      <SelectButton open={isOpen} setOpen={setIsOpen} />
-      <SelectBody open={isOpen} />
+      <SelectButton open={isOpen} setOpen={setIsOpen} text={title} />
+      <SelectBody open={isOpen} text={text} />
     </View>
   );
 };

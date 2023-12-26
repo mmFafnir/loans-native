@@ -27,6 +27,7 @@ const InputCheckbox: FC<IProps> = ({
   useEffect(() => {
     setValue(checked);
   }, [checked]);
+
   return (
     <CheckboxView>
       <Card
@@ -57,6 +58,8 @@ const InputCheckbox: FC<IProps> = ({
   );
 };
 
+export default InputCheckbox;
+
 const CheckboxView = styled.View`
   flex-direction: row;
   align-items: center;
@@ -77,14 +80,12 @@ const LabelText = styled.Text`
   font-size: 14px;
   margin-left: 13px;
   text-decoration: underline;
+  flex: 1;
 `;
-
-export default InputCheckbox;
 
 const styles = StyleSheet.create({
   card: {
     height: 23,
-    // width: 25,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',

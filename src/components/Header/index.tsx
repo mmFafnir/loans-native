@@ -19,7 +19,6 @@ const Header: FC<IProps> = ({navigation}) => {
   const customNavigate = useNavigation<MainScreenProp>();
   const goBack = () => navigation?.goBack();
   const goMain = () => customNavigate.navigate('MainPage');
-
   return (
     <Card
       style={styles.card}

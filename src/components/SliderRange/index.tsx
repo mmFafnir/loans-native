@@ -1,39 +1,46 @@
-import React, {FC, useEffect, useState} from 'react';
-import {ImageBackground, View} from 'react-native';
+import React, {FC, memo, useEffect, useState} from 'react';
+import {Dimensions, ImageBackground, View} from 'react-native';
 import SliderRangeValue from './SliderRangeValue';
 import SliderRangeTrack from './SliderRangeTrack';
 import styled from 'styled-components/native';
+import {Surface} from 'react-native-paper';
 
 const sliderValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
 
 const SliderRange = () => {
   const [value, setValue] = useState<number>(10);
-
   useEffect(() => {
     setValue(sliderValues[4]);
   }, []);
   return (
+    // <Surface style={{borderRadius: 20}} elevation={4}>
     <SliderRangeView>
-      <BackgroundImage source={require('../../assets/images/map.png')} />
-      <SliderTitle>CHOOSE AMOUNT</SliderTitle>
-      <SliderRangeValue />
-      <SliderRangeTrack values={sliderValues} defaultValue={sliderValues[4]} />
+      <BackgroundImage
+        // style={{width: Dimensions.get('screen').width - 32}}
+        source={require('../../assets/images/map.png')}>
+        <SliderTitle>CHOOSE AMOUNT</SliderTitle>
+        <SliderRangeValue />
+        <SliderRangeTrack
+          values={sliderValues}
+          defaultValue={sliderValues[4]}
+        />
+      </BackgroundImage>
     </SliderRangeView>
+    // </Surface>
   );
 };
 
-export default SliderRange;
+export default memo(SliderRange);
 
 const SliderRangeView = styled.View`
   position: relative;
-  padding: 20px 40px;
   text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
 `;
 
-const BackgroundImage = styled.Image`
-  position: absolute;
-  right: 0;
-  top: 0;
+const BackgroundImage = styled.ImageBackground`
+  padding: ${Dimensions.get('screen').width > 360 ? '20px 40px' : '20px 20px'};
 `;
 
 const SliderTitle = styled.Text`

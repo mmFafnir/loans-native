@@ -6,6 +6,7 @@ import DateTimePicker, {DateType} from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import {isWeekend} from '../../../assets/scripts/date';
 import ErrorMassage from './ErrorMassage';
+import {differenceDate} from '../../../assets/scripts/differenceDate';
 
 interface IProps {
   defaultValue?: string;
@@ -38,6 +39,7 @@ const InputDate: FC<IProps> = ({
       const d = new Date(dayjs(currentValue).format('YYYY-MM-DD'));
       serWeekend(isWeekend(d));
     }
+
     onChange(dayjs(currentValue).format('YYYY-MM-DD'));
   };
   const [visible, setVisible] = useState(false);
@@ -71,6 +73,11 @@ const InputDate: FC<IProps> = ({
         <Modal visible={visible} onDismiss={hideModal}>
           <ModalView>
             <DateTimePicker
+              headerTextStyle={{color: '#000'}}
+              calendarTextStyle={{color: '#000'}}
+              weekDaysTextStyle={{color: '#000'}}
+              todayTextStyle={{color: '#000'}}
+              selectedTextStyle={{color: '#fff'}}
               value={currentValue}
               onValueChange={setCurrentValue}
               minimumDate={minDate}

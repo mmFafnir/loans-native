@@ -107,7 +107,10 @@ const Slider = (): JSX.Element => {
         renderItem={({item}) => (
           <SlideView key={item.id}>
             <SlideViewImage style={{flex: 1}}>
-              <Image source={item.img} />
+              <Image
+                style={{objectFit: 'contain', width: '100%', height: '100%'}}
+                source={item.img}
+              />
             </SlideViewImage>
             <SlideText>{item.text}</SlideText>
           </SlideView>

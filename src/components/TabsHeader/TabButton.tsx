@@ -52,9 +52,9 @@ const TabText = styled.Text`
   color: #fff;
   text-align: center;
   font-size: 20px;
-  font-weight: 900;
   overflow: visible;
   line-height: 22px;
+  font-family: 'Inter-Bold';
 `;
 
 const TabView = styled.View`

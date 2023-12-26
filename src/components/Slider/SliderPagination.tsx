@@ -86,6 +86,7 @@ const Pagination = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
   margin-bottom: 30px;
   padding: 0px 10px;
 `;

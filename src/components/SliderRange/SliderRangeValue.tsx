@@ -17,7 +17,7 @@ export default SliderRangeValue;
 const RangeInput = styled.View`
   align-items: center;
   justify-content: center;
-  width: 280px;
+  width: 100%;
   height: 47px;
   border-radius: 10px;
   overflow: hidden;

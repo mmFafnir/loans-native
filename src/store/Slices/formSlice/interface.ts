@@ -8,6 +8,7 @@ export type FormValues = {
   address: string;
   ssn: string;
   activeMilitary: 'YES' | 'NO';
+  unsecuredDebt: 'YES' | 'NO';
   driversLicenseNumber: string;
   incomeType: 'EMPLOYMENT ' | 'BENEFITS';
   workCompanyName: string;
@@ -24,4 +25,9 @@ export type FormValues = {
   dob: string;
 };
 
-export type TypeResponseStatusForm = 'success' | 'have' | 'reject';
+export type TypeResponseStatusForm =
+  | 'sold'
+  | 'have'
+  | 'reject'
+  | 'error'
+  | 'In Progress';
